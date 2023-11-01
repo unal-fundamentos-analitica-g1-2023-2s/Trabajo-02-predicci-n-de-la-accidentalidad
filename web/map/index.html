@@ -1,0 +1,4507 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/ClusterMuertos_1.js"></script>
+        <script src="data/ClusterHeridos_2.js"></script>
+        <script src="data/ClusterAtropellos_3.js"></script>
+        <script src="data/ClusterAccidentes_4.js"></script>
+        <script src="data/TotalIncidentes_5.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[6.16602913170659,-75.85956794351407],[6.388595500626603,-75.23471806291994]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OpenStreetMap_0');
+        map.getPane('pane_OpenStreetMap_0').style.zIndex = 400;
+        var layer_OpenStreetMap_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop_ClusterMuertos_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">OBJECTID</th>\
+                        <td>' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CODIGO</th>\
+                        <td>' + (feature.properties['CODIGO'] !== null ? autolinker.link(feature.properties['CODIGO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE</th>\
+                        <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUBTIPO_BA</th>\
+                        <td>' + (feature.properties['SUBTIPO_BA'] !== null ? autolinker.link(feature.properties['SUBTIPO_BA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPEAREA</th>\
+                        <td>' + (feature.properties['SHAPEAREA'] !== null ? autolinker.link(feature.properties['SHAPEAREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPELEN</th>\
+                        <td>' + (feature.properties['SHAPELEN'] !== null ? autolinker.link(feature.properties['SHAPELEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUERTOS</th>\
+                        <td>' + (feature.properties['MUERTOS'] !== null ? autolinker.link(feature.properties['MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HERIDOS</th>\
+                        <td>' + (feature.properties['HERIDOS'] !== null ? autolinker.link(feature.properties['HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ATROPELLOS</th>\
+                        <td>' + (feature.properties['ATROPELLOS'] !== null ? autolinker.link(feature.properties['ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TOTAL</th>\
+                        <td>' + (feature.properties['TOTAL'] !== null ? autolinker.link(feature.properties['TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ACCIDENTES</th>\
+                        <td>' + (feature.properties['GR_ACCIDENTES'] !== null ? autolinker.link(feature.properties['GR_ACCIDENTES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ATROPELLOS</th>\
+                        <td>' + (feature.properties['GR_ATROPELLOS'] !== null ? autolinker.link(feature.properties['GR_ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_HERIDOS</th>\
+                        <td>' + (feature.properties['GR_HERIDOS'] !== null ? autolinker.link(feature.properties['GR_HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_MUERTOS</th>\
+                        <td>' + (feature.properties['GR_MUERTOS'] !== null ? autolinker.link(feature.properties['GR_MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ClusterMuertos_1_0(feature) {
+            switch(String(feature.properties['GR_MUERTOS'])) {
+                default:
+                    return {
+                pane: 'pane_ClusterMuertos_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,59,187,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '0':
+                    return {
+                pane: 'pane_ClusterMuertos_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,117,206,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1':
+                    return {
+                pane: 'pane_ClusterMuertos_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(220,72,39,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ClusterMuertos_1');
+        map.getPane('pane_ClusterMuertos_1').style.zIndex = 401;
+        map.getPane('pane_ClusterMuertos_1').style['mix-blend-mode'] = 'normal';
+        var layer_ClusterMuertos_1 = new L.geoJson(json_ClusterMuertos_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ClusterMuertos_1',
+            layerName: 'layer_ClusterMuertos_1',
+            pane: 'pane_ClusterMuertos_1',
+            onEachFeature: pop_ClusterMuertos_1,
+            style: style_ClusterMuertos_1_0,
+        });
+        bounds_group.addLayer(layer_ClusterMuertos_1);
+        function pop_ClusterHeridos_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">OBJECTID</th>\
+                        <td>' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CODIGO</th>\
+                        <td>' + (feature.properties['CODIGO'] !== null ? autolinker.link(feature.properties['CODIGO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE</th>\
+                        <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUBTIPO_BA</th>\
+                        <td>' + (feature.properties['SUBTIPO_BA'] !== null ? autolinker.link(feature.properties['SUBTIPO_BA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPEAREA</th>\
+                        <td>' + (feature.properties['SHAPEAREA'] !== null ? autolinker.link(feature.properties['SHAPEAREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPELEN</th>\
+                        <td>' + (feature.properties['SHAPELEN'] !== null ? autolinker.link(feature.properties['SHAPELEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUERTOS</th>\
+                        <td>' + (feature.properties['MUERTOS'] !== null ? autolinker.link(feature.properties['MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HERIDOS</th>\
+                        <td>' + (feature.properties['HERIDOS'] !== null ? autolinker.link(feature.properties['HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ATROPELLOS</th>\
+                        <td>' + (feature.properties['ATROPELLOS'] !== null ? autolinker.link(feature.properties['ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TOTAL</th>\
+                        <td>' + (feature.properties['TOTAL'] !== null ? autolinker.link(feature.properties['TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ACCIDENTES</th>\
+                        <td>' + (feature.properties['GR_ACCIDENTES'] !== null ? autolinker.link(feature.properties['GR_ACCIDENTES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ATROPELLOS</th>\
+                        <td>' + (feature.properties['GR_ATROPELLOS'] !== null ? autolinker.link(feature.properties['GR_ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_HERIDOS</th>\
+                        <td>' + (feature.properties['GR_HERIDOS'] !== null ? autolinker.link(feature.properties['GR_HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_MUERTOS</th>\
+                        <td>' + (feature.properties['GR_MUERTOS'] !== null ? autolinker.link(feature.properties['GR_MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ClusterHeridos_2_0(feature) {
+            switch(String(feature.properties['GR_HERIDOS'])) {
+                case '0':
+                    return {
+                pane: 'pane_ClusterHeridos_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(18,193,205,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1':
+                    return {
+                pane: 'pane_ClusterHeridos_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(112,230,23,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_ClusterHeridos_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,34,222,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_ClusterHeridos_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(206,121,115,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ClusterHeridos_2');
+        map.getPane('pane_ClusterHeridos_2').style.zIndex = 402;
+        map.getPane('pane_ClusterHeridos_2').style['mix-blend-mode'] = 'normal';
+        var layer_ClusterHeridos_2 = new L.geoJson(json_ClusterHeridos_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ClusterHeridos_2',
+            layerName: 'layer_ClusterHeridos_2',
+            pane: 'pane_ClusterHeridos_2',
+            onEachFeature: pop_ClusterHeridos_2,
+            style: style_ClusterHeridos_2_0,
+        });
+        bounds_group.addLayer(layer_ClusterHeridos_2);
+        function pop_ClusterAtropellos_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">OBJECTID</th>\
+                        <td>' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CODIGO</th>\
+                        <td>' + (feature.properties['CODIGO'] !== null ? autolinker.link(feature.properties['CODIGO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE</th>\
+                        <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUBTIPO_BA</th>\
+                        <td>' + (feature.properties['SUBTIPO_BA'] !== null ? autolinker.link(feature.properties['SUBTIPO_BA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPEAREA</th>\
+                        <td>' + (feature.properties['SHAPEAREA'] !== null ? autolinker.link(feature.properties['SHAPEAREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPELEN</th>\
+                        <td>' + (feature.properties['SHAPELEN'] !== null ? autolinker.link(feature.properties['SHAPELEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUERTOS</th>\
+                        <td>' + (feature.properties['MUERTOS'] !== null ? autolinker.link(feature.properties['MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HERIDOS</th>\
+                        <td>' + (feature.properties['HERIDOS'] !== null ? autolinker.link(feature.properties['HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ATROPELLOS</th>\
+                        <td>' + (feature.properties['ATROPELLOS'] !== null ? autolinker.link(feature.properties['ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TOTAL</th>\
+                        <td>' + (feature.properties['TOTAL'] !== null ? autolinker.link(feature.properties['TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ACCIDENTES</th>\
+                        <td>' + (feature.properties['GR_ACCIDENTES'] !== null ? autolinker.link(feature.properties['GR_ACCIDENTES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ATROPELLOS</th>\
+                        <td>' + (feature.properties['GR_ATROPELLOS'] !== null ? autolinker.link(feature.properties['GR_ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_HERIDOS</th>\
+                        <td>' + (feature.properties['GR_HERIDOS'] !== null ? autolinker.link(feature.properties['GR_HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_MUERTOS</th>\
+                        <td>' + (feature.properties['GR_MUERTOS'] !== null ? autolinker.link(feature.properties['GR_MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ClusterAtropellos_3_0(feature) {
+            switch(String(feature.properties['GR_ATROPELLOS'])) {
+                case '0':
+                    return {
+                pane: 'pane_ClusterAtropellos_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,68,126,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1':
+                    return {
+                pane: 'pane_ClusterAtropellos_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(110,148,215,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_ClusterAtropellos_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(103,233,27,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ClusterAtropellos_3');
+        map.getPane('pane_ClusterAtropellos_3').style.zIndex = 403;
+        map.getPane('pane_ClusterAtropellos_3').style['mix-blend-mode'] = 'normal';
+        var layer_ClusterAtropellos_3 = new L.geoJson(json_ClusterAtropellos_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ClusterAtropellos_3',
+            layerName: 'layer_ClusterAtropellos_3',
+            pane: 'pane_ClusterAtropellos_3',
+            onEachFeature: pop_ClusterAtropellos_3,
+            style: style_ClusterAtropellos_3_0,
+        });
+        bounds_group.addLayer(layer_ClusterAtropellos_3);
+        function pop_ClusterAccidentes_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">OBJECTID</th>\
+                        <td>' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CODIGO</th>\
+                        <td>' + (feature.properties['CODIGO'] !== null ? autolinker.link(feature.properties['CODIGO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE</th>\
+                        <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUBTIPO_BA</th>\
+                        <td>' + (feature.properties['SUBTIPO_BA'] !== null ? autolinker.link(feature.properties['SUBTIPO_BA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPEAREA</th>\
+                        <td>' + (feature.properties['SHAPEAREA'] !== null ? autolinker.link(feature.properties['SHAPEAREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPELEN</th>\
+                        <td>' + (feature.properties['SHAPELEN'] !== null ? autolinker.link(feature.properties['SHAPELEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUERTOS</th>\
+                        <td>' + (feature.properties['MUERTOS'] !== null ? autolinker.link(feature.properties['MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HERIDOS</th>\
+                        <td>' + (feature.properties['HERIDOS'] !== null ? autolinker.link(feature.properties['HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ATROPELLOS</th>\
+                        <td>' + (feature.properties['ATROPELLOS'] !== null ? autolinker.link(feature.properties['ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TOTAL</th>\
+                        <td>' + (feature.properties['TOTAL'] !== null ? autolinker.link(feature.properties['TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ACCIDENTES</th>\
+                        <td>' + (feature.properties['GR_ACCIDENTES'] !== null ? autolinker.link(feature.properties['GR_ACCIDENTES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ATROPELLOS</th>\
+                        <td>' + (feature.properties['GR_ATROPELLOS'] !== null ? autolinker.link(feature.properties['GR_ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_HERIDOS</th>\
+                        <td>' + (feature.properties['GR_HERIDOS'] !== null ? autolinker.link(feature.properties['GR_HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_MUERTOS</th>\
+                        <td>' + (feature.properties['GR_MUERTOS'] !== null ? autolinker.link(feature.properties['GR_MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ClusterAccidentes_4_0(feature) {
+            switch(String(feature.properties['GR_ACCIDENTES'])) {
+                case '0':
+                    return {
+                pane: 'pane_ClusterAccidentes_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,252,245,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1':
+                    return {
+                pane: 'pane_ClusterAccidentes_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(123,199,124,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_ClusterAccidentes_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,68,27,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ClusterAccidentes_4');
+        map.getPane('pane_ClusterAccidentes_4').style.zIndex = 404;
+        map.getPane('pane_ClusterAccidentes_4').style['mix-blend-mode'] = 'normal';
+        var layer_ClusterAccidentes_4 = new L.geoJson(json_ClusterAccidentes_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ClusterAccidentes_4',
+            layerName: 'layer_ClusterAccidentes_4',
+            pane: 'pane_ClusterAccidentes_4',
+            onEachFeature: pop_ClusterAccidentes_4,
+            style: style_ClusterAccidentes_4_0,
+        });
+        bounds_group.addLayer(layer_ClusterAccidentes_4);
+        function pop_TotalIncidentes_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">OBJECTID</th>\
+                        <td>' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CODIGO</th>\
+                        <td>' + (feature.properties['CODIGO'] !== null ? autolinker.link(feature.properties['CODIGO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE</th>\
+                        <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUBTIPO_BA</th>\
+                        <td>' + (feature.properties['SUBTIPO_BA'] !== null ? autolinker.link(feature.properties['SUBTIPO_BA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPEAREA</th>\
+                        <td>' + (feature.properties['SHAPEAREA'] !== null ? autolinker.link(feature.properties['SHAPEAREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SHAPELEN</th>\
+                        <td>' + (feature.properties['SHAPELEN'] !== null ? autolinker.link(feature.properties['SHAPELEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUERTOS</th>\
+                        <td>' + (feature.properties['MUERTOS'] !== null ? autolinker.link(feature.properties['MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HERIDOS</th>\
+                        <td>' + (feature.properties['HERIDOS'] !== null ? autolinker.link(feature.properties['HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ATROPELLOS</th>\
+                        <td>' + (feature.properties['ATROPELLOS'] !== null ? autolinker.link(feature.properties['ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TOTAL</th>\
+                        <td>' + (feature.properties['TOTAL'] !== null ? autolinker.link(feature.properties['TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ACCIDENTES</th>\
+                        <td>' + (feature.properties['GR_ACCIDENTES'] !== null ? autolinker.link(feature.properties['GR_ACCIDENTES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_ATROPELLOS</th>\
+                        <td>' + (feature.properties['GR_ATROPELLOS'] !== null ? autolinker.link(feature.properties['GR_ATROPELLOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_HERIDOS</th>\
+                        <td>' + (feature.properties['GR_HERIDOS'] !== null ? autolinker.link(feature.properties['GR_HERIDOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GR_MUERTOS</th>\
+                        <td>' + (feature.properties['GR_MUERTOS'] !== null ? autolinker.link(feature.properties['GR_MUERTOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_TotalIncidentes_5_0(feature) {
+            switch(String(feature.properties['TOTAL'])) {
+                case '0':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,245,240,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,244,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,244,238,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,243,237,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '4':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,242,236,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '6':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,242,235,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '7':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,241,234,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '8':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,240,233,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '9':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,240,232,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '11':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,239,232,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '12':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,238,231,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '14':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,238,230,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '19':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,237,229,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '20':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,236,228,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '23':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,236,227,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '25':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,235,226,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '26':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,234,225,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '30':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,234,224,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '33':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,233,223,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '34':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,233,222,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '38':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,232,221,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '40':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,231,220,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '41':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,231,219,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '42':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,230,218,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '43':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,229,217,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '44':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,229,217,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '45':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,228,216,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '46':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,227,215,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '47':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,227,214,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '48':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,226,213,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '53':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,225,212,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '55':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,225,211,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '60':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,224,210,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '61':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,223,208,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '63':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,222,207,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '67':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,221,205,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '70':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,219,204,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '73':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,218,202,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '78':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,217,201,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '79':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,216,199,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '89':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,215,198,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '92':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,214,196,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '94':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,212,195,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '98':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,211,193,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '101':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,210,192,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '104':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,209,190,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '108':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,208,189,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '109':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,207,187,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '110':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,205,185,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '119':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,204,184,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '121':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,203,182,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '125':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,202,181,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '126':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,201,179,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '127':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,200,178,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '128':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,199,176,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '129':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,197,175,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '134':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,196,173,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '137':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,195,172,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '144':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,194,170,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '152':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,193,169,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '156':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,192,167,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '158':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,190,166,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '160':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,189,164,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '163':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,188,162,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '165':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,187,161,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '166':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,186,159,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '172':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,184,158,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '174':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,183,157,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '176':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,182,155,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '177':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,181,154,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '185':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,179,152,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '186':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,178,151,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '189':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,177,149,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '191':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,175,148,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '192':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,174,146,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '195':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,173,145,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '196':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,172,143,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '202':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,170,142,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '205':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,169,140,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '207':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,168,139,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '208':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,166,137,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '209':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,165,136,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '210':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,164,134,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '214':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,163,133,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '222':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,161,132,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '223':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,160,130,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '224':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,159,129,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '230':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,157,127,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '236':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,156,126,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '238':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,155,124,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '247':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,154,123,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '248':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,152,121,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '250':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,151,120,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '257':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,150,118,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '260':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,148,117,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '261':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,147,115,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '265':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,146,114,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '267':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,145,113,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '268':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,143,111,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '269':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,142,110,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '271':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,141,109,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '276':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,140,108,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '282':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,138,106,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '289':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,137,105,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '291':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,136,104,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '297':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,135,103,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '301':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,133,101,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '312':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,132,100,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '317':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,131,99,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '318':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,130,98,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '320':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,128,96,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '327':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,127,95,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '328':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,126,94,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '337':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,125,93,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '346':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,123,91,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '353':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,122,90,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '354':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,121,89,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '359':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,120,88,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '360':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,118,86,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '363':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,117,85,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '364':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,116,84,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '384':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,115,83,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '390':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,113,81,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '392':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,112,80,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '397':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,111,79,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '400':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,110,78,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '406':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,108,76,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '407':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,107,75,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '416':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,106,74,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '422':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,104,73,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '437':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,103,72,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '445':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,101,71,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '456':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,100,70,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '461':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,99,69,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '473':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,97,68,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '476':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,96,67,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '477':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,94,66,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '478':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,93,65,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '481':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,91,65,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '492':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,90,64,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '493':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,88,63,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '502':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,87,62,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '503':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,85,61,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '519':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,84,60,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '521':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,82,59,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '528':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,81,58,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '533':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,79,57,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '536':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,78,56,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '537':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,76,55,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '539':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,75,54,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '555':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,74,53,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '559':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(242,72,52,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '563':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(242,71,51,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '578':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(242,69,50,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '583':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,68,50,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '590':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,66,49,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '591':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(240,65,48,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '599':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(240,63,47,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '600':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(240,62,46,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '606':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,60,45,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '607':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,59,44,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '611':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(238,58,43,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '617':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,57,43,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '621':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(236,56,43,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '632':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(234,55,42,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '633':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(233,53,42,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '635':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,52,41,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '646':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,51,41,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '647':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(230,50,40,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '662':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,49,40,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '669':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(228,48,39,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '678':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,47,39,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '679':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,46,38,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '697':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,45,38,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '699':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,44,37,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '700':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(222,42,37,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '701':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,41,36,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '715':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(220,40,36,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '716':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,39,36,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '719':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,38,35,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '731':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(216,37,35,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '743':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,36,34,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '751':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(214,35,34,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '768':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,34,33,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '774':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(212,33,33,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '779':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,32,32,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '798':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(210,30,32,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '801':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,29,31,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '802':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(207,28,31,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '806':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(206,27,30,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '817':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(205,26,30,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '833':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,25,29,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '835':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(203,24,29,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '842':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,24,29,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '844':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(200,23,28,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '855':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(199,23,28,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '858':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(198,23,28,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '860':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(196,22,28,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '875':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(195,22,27,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '877':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(194,22,27,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '891':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(193,22,27,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '904':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(191,21,27,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '923':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,21,26,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '938':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(189,21,26,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '939':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(187,20,26,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '944':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(186,20,25,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '966':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(185,20,25,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '982':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(184,19,25,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '991':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(182,19,25,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1000':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(181,19,24,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1018':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(180,18,24,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1021':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(178,18,24,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1048':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(177,18,24,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1049':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(176,18,23,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1074':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(175,17,23,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1096':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(173,17,23,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1144':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(172,17,22,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1153':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(171,16,22,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1167':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(169,16,22,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1181':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(168,16,22,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1193':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(167,15,21,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1200':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,15,21,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1276':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(163,15,21,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1279':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(161,14,20,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1358':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(158,13,20,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1421':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(156,13,20,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1437':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(153,12,20,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1491':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(151,12,19,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1567':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(148,11,19,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1615':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(146,10,19,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1751':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(143,10,18,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1764':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,9,18,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1799':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(138,9,18,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1814':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(136,8,17,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1816':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,7,17,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1917':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(131,7,17,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1978':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,6,16,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2024':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(126,5,16,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2031':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(123,5,16,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2267':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(121,4,15,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2611':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(118,4,15,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2666':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(116,3,15,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2709':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(113,2,14,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2776':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(111,2,14,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3084':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(108,1,14,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3487':
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(106,1,13,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_TotalIncidentes_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(103,0,13,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_TotalIncidentes_5');
+        map.getPane('pane_TotalIncidentes_5').style.zIndex = 405;
+        map.getPane('pane_TotalIncidentes_5').style['mix-blend-mode'] = 'normal';
+        var layer_TotalIncidentes_5 = new L.geoJson(json_TotalIncidentes_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TotalIncidentes_5',
+            layerName: 'layer_TotalIncidentes_5',
+            pane: 'pane_TotalIncidentes_5',
+            onEachFeature: pop_TotalIncidentes_5,
+            style: style_TotalIncidentes_5_0,
+        });
+        bounds_group.addLayer(layer_TotalIncidentes_5);
+        map.addLayer(layer_TotalIncidentes_5);
+            var abstract = new L.Control({'position':'bottomright'});
+            abstract.onAdd = function (map) {
+                this._div = L.DomUtil.create('div',
+                'leaflet-control abstract');
+                this._div.id = 'abstract'
+
+                    abstract.show();
+                    return this._div;
+                };
+                abstract.show = function () {
+                    this._div.classList.remove("abstract");
+                    this._div.classList.add("abstractUncollapsed");
+                    this._div.innerHTML = 'Mapa del segundo entregable de Fundamentos de Analítica 2023-2S';
+            };
+            abstract.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Total Incidentes<br /><table><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_00.png" /></td><td>0</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_11.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_22.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_33.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_44.png" /></td><td>4</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_65.png" /></td><td>6</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_76.png" /></td><td>7</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_87.png" /></td><td>8</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_98.png" /></td><td>9</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_119.png" /></td><td>11</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1210.png" /></td><td>12</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1411.png" /></td><td>14</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1912.png" /></td><td>19</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2013.png" /></td><td>20</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2314.png" /></td><td>23</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2515.png" /></td><td>25</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2616.png" /></td><td>26</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_3017.png" /></td><td>30</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_3318.png" /></td><td>33</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_3419.png" /></td><td>34</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_3820.png" /></td><td>38</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_4021.png" /></td><td>40</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_4122.png" /></td><td>41</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_4223.png" /></td><td>42</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_4324.png" /></td><td>43</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_4425.png" /></td><td>44</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_4526.png" /></td><td>45</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_4627.png" /></td><td>46</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_4728.png" /></td><td>47</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_4829.png" /></td><td>48</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_5330.png" /></td><td>53</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_5531.png" /></td><td>55</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_6032.png" /></td><td>60</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_6133.png" /></td><td>61</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_6334.png" /></td><td>63</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_6735.png" /></td><td>67</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_7036.png" /></td><td>70</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_7337.png" /></td><td>73</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_7838.png" /></td><td>78</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_7939.png" /></td><td>79</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_8940.png" /></td><td>89</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_9241.png" /></td><td>92</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_9442.png" /></td><td>94</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_9843.png" /></td><td>98</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_10144.png" /></td><td>101</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_10445.png" /></td><td>104</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_10846.png" /></td><td>108</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_10947.png" /></td><td>109</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_11048.png" /></td><td>110</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_11949.png" /></td><td>119</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_12150.png" /></td><td>121</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_12551.png" /></td><td>125</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_12652.png" /></td><td>126</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_12753.png" /></td><td>127</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_12854.png" /></td><td>128</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_12955.png" /></td><td>129</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_13456.png" /></td><td>134</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_13757.png" /></td><td>137</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_14458.png" /></td><td>144</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_15259.png" /></td><td>152</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_15660.png" /></td><td>156</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_15861.png" /></td><td>158</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_16062.png" /></td><td>160</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_16363.png" /></td><td>163</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_16564.png" /></td><td>165</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_16665.png" /></td><td>166</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_17266.png" /></td><td>172</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_17467.png" /></td><td>174</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_17668.png" /></td><td>176</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_17769.png" /></td><td>177</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_18570.png" /></td><td>185</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_18671.png" /></td><td>186</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_18972.png" /></td><td>189</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_19173.png" /></td><td>191</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_19274.png" /></td><td>192</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_19575.png" /></td><td>195</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_19676.png" /></td><td>196</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_20277.png" /></td><td>202</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_20578.png" /></td><td>205</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_20779.png" /></td><td>207</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_20880.png" /></td><td>208</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_20981.png" /></td><td>209</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_21082.png" /></td><td>210</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_21483.png" /></td><td>214</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_22284.png" /></td><td>222</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_22385.png" /></td><td>223</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_22486.png" /></td><td>224</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_23087.png" /></td><td>230</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_23688.png" /></td><td>236</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_23889.png" /></td><td>238</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_24790.png" /></td><td>247</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_24891.png" /></td><td>248</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_25092.png" /></td><td>250</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_25793.png" /></td><td>257</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_26094.png" /></td><td>260</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_26195.png" /></td><td>261</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_26596.png" /></td><td>265</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_26797.png" /></td><td>267</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_26898.png" /></td><td>268</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_26999.png" /></td><td>269</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_271100.png" /></td><td>271</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_276101.png" /></td><td>276</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_282102.png" /></td><td>282</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_289103.png" /></td><td>289</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_291104.png" /></td><td>291</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_297105.png" /></td><td>297</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_301106.png" /></td><td>301</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_312107.png" /></td><td>312</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_317108.png" /></td><td>317</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_318109.png" /></td><td>318</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_320110.png" /></td><td>320</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_327111.png" /></td><td>327</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_328112.png" /></td><td>328</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_337113.png" /></td><td>337</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_346114.png" /></td><td>346</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_353115.png" /></td><td>353</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_354116.png" /></td><td>354</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_359117.png" /></td><td>359</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_360118.png" /></td><td>360</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_363119.png" /></td><td>363</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_364120.png" /></td><td>364</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_384121.png" /></td><td>384</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_390122.png" /></td><td>390</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_392123.png" /></td><td>392</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_397124.png" /></td><td>397</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_400125.png" /></td><td>400</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_406126.png" /></td><td>406</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_407127.png" /></td><td>407</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_416128.png" /></td><td>416</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_422129.png" /></td><td>422</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_437130.png" /></td><td>437</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_445131.png" /></td><td>445</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_456132.png" /></td><td>456</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_461133.png" /></td><td>461</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_473134.png" /></td><td>473</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_476135.png" /></td><td>476</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_477136.png" /></td><td>477</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_478137.png" /></td><td>478</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_481138.png" /></td><td>481</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_492139.png" /></td><td>492</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_493140.png" /></td><td>493</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_502141.png" /></td><td>502</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_503142.png" /></td><td>503</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_519143.png" /></td><td>519</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_521144.png" /></td><td>521</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_528145.png" /></td><td>528</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_533146.png" /></td><td>533</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_536147.png" /></td><td>536</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_537148.png" /></td><td>537</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_539149.png" /></td><td>539</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_555150.png" /></td><td>555</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_559151.png" /></td><td>559</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_563152.png" /></td><td>563</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_578153.png" /></td><td>578</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_583154.png" /></td><td>583</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_590155.png" /></td><td>590</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_591156.png" /></td><td>591</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_599157.png" /></td><td>599</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_600158.png" /></td><td>600</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_606159.png" /></td><td>606</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_607160.png" /></td><td>607</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_611161.png" /></td><td>611</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_617162.png" /></td><td>617</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_621163.png" /></td><td>621</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_632164.png" /></td><td>632</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_633165.png" /></td><td>633</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_635166.png" /></td><td>635</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_646167.png" /></td><td>646</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_647168.png" /></td><td>647</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_662169.png" /></td><td>662</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_669170.png" /></td><td>669</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_678171.png" /></td><td>678</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_679172.png" /></td><td>679</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_697173.png" /></td><td>697</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_699174.png" /></td><td>699</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_700175.png" /></td><td>700</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_701176.png" /></td><td>701</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_715177.png" /></td><td>715</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_716178.png" /></td><td>716</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_719179.png" /></td><td>719</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_731180.png" /></td><td>731</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_743181.png" /></td><td>743</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_751182.png" /></td><td>751</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_768183.png" /></td><td>768</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_774184.png" /></td><td>774</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_779185.png" /></td><td>779</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_798186.png" /></td><td>798</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_801187.png" /></td><td>801</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_802188.png" /></td><td>802</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_806189.png" /></td><td>806</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_817190.png" /></td><td>817</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_833191.png" /></td><td>833</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_835192.png" /></td><td>835</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_842193.png" /></td><td>842</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_844194.png" /></td><td>844</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_855195.png" /></td><td>855</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_858196.png" /></td><td>858</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_860197.png" /></td><td>860</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_875198.png" /></td><td>875</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_877199.png" /></td><td>877</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_891200.png" /></td><td>891</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_904201.png" /></td><td>904</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_923202.png" /></td><td>923</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_938203.png" /></td><td>938</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_939204.png" /></td><td>939</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_944205.png" /></td><td>944</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_966206.png" /></td><td>966</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_982207.png" /></td><td>982</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_991208.png" /></td><td>991</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1000209.png" /></td><td>1000</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1018210.png" /></td><td>1018</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1021211.png" /></td><td>1021</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1048212.png" /></td><td>1048</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1049213.png" /></td><td>1049</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1074214.png" /></td><td>1074</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1096215.png" /></td><td>1096</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1144216.png" /></td><td>1144</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1153217.png" /></td><td>1153</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1167218.png" /></td><td>1167</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1181219.png" /></td><td>1181</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1193220.png" /></td><td>1193</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1200221.png" /></td><td>1200</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1276222.png" /></td><td>1276</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1279223.png" /></td><td>1279</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1358224.png" /></td><td>1358</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1421225.png" /></td><td>1421</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1437226.png" /></td><td>1437</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1491227.png" /></td><td>1491</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1567228.png" /></td><td>1567</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1615229.png" /></td><td>1615</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1751230.png" /></td><td>1751</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1764231.png" /></td><td>1764</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1799232.png" /></td><td>1799</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1814233.png" /></td><td>1814</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1816234.png" /></td><td>1816</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1917235.png" /></td><td>1917</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_1978236.png" /></td><td>1978</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2024237.png" /></td><td>2024</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2031238.png" /></td><td>2031</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2267239.png" /></td><td>2267</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2611240.png" /></td><td>2611</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2666241.png" /></td><td>2666</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2709242.png" /></td><td>2709</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_2776243.png" /></td><td>2776</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_3084244.png" /></td><td>3084</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_3487245.png" /></td><td>3487</td></tr><tr><td style="text-align: center;"><img src="legend/TotalIncidentes_5_246.png" /></td><td></td></tr></table>': layer_TotalIncidentes_5,'Cluster Accidentes<br /><table><tr><td style="text-align: center;"><img src="legend/ClusterAccidentes_4_00.png" /></td><td>0</td></tr><tr><td style="text-align: center;"><img src="legend/ClusterAccidentes_4_11.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/ClusterAccidentes_4_2.png" /></td><td></td></tr></table>': layer_ClusterAccidentes_4,'Cluster Atropellos<br /><table><tr><td style="text-align: center;"><img src="legend/ClusterAtropellos_3_00.png" /></td><td>0</td></tr><tr><td style="text-align: center;"><img src="legend/ClusterAtropellos_3_11.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/ClusterAtropellos_3_2.png" /></td><td></td></tr></table>': layer_ClusterAtropellos_3,'Cluster Heridos<br /><table><tr><td style="text-align: center;"><img src="legend/ClusterHeridos_2_00.png" /></td><td>0</td></tr><tr><td style="text-align: center;"><img src="legend/ClusterHeridos_2_11.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/ClusterHeridos_2_22.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/ClusterHeridos_2_3.png" /></td><td></td></tr></table>': layer_ClusterHeridos_2,'Cluster Muertos<br /><table><tr><td style="text-align: center;"><img src="legend/ClusterMuertos_1_0.png" /></td><td></td></tr><tr><td style="text-align: center;"><img src="legend/ClusterMuertos_1_01.png" /></td><td>0</td></tr><tr><td style="text-align: center;"><img src="legend/ClusterMuertos_1_12.png" /></td><td>1</td></tr></table>': layer_ClusterMuertos_1,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_ClusterMuertos_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOMBRE'] !== null?String('<div style="color: #323232; font-size: 8pt; font-family: \'Liberation Sans\', sans-serif;">' + layer.feature.properties['NOMBRE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_ClusterMuertos_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_ClusterHeridos_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOMBRE'] !== null?String('<div style="color: #323232; font-size: 8pt; font-family: \'Liberation Sans\', sans-serif;">' + layer.feature.properties['NOMBRE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_ClusterHeridos_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_ClusterAtropellos_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOMBRE'] !== null?String('<div style="color: #323232; font-size: 8pt; font-family: \'Liberation Sans\', sans-serif;">' + layer.feature.properties['NOMBRE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_ClusterAtropellos_3'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_ClusterAccidentes_4.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOMBRE'] !== null?String('<div style="color: #323232; font-size: 8pt; font-family: \'Liberation Sans\', sans-serif;">' + layer.feature.properties['NOMBRE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_ClusterAccidentes_4'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_TotalIncidentes_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOMBRE'] !== null?String('<div style="color: #323232; font-size: 8pt; font-family: \'Liberation Sans\', sans-serif;">' + layer.feature.properties['NOMBRE']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_TotalIncidentes_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_ClusterMuertos_1,layer_ClusterHeridos_2,layer_ClusterAtropellos_3,layer_ClusterAccidentes_4,layer_TotalIncidentes_5]);
+        map.on("zoomend", function(){
+            resetLabels([layer_ClusterMuertos_1,layer_ClusterHeridos_2,layer_ClusterAtropellos_3,layer_ClusterAccidentes_4,layer_TotalIncidentes_5]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_ClusterMuertos_1,layer_ClusterHeridos_2,layer_ClusterAtropellos_3,layer_ClusterAccidentes_4,layer_TotalIncidentes_5]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_ClusterMuertos_1,layer_ClusterHeridos_2,layer_ClusterAtropellos_3,layer_ClusterAccidentes_4,layer_TotalIncidentes_5]);
+        });
+        </script>
+    </body>
+</html>

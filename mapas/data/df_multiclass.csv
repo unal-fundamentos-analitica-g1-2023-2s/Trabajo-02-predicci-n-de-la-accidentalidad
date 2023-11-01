@@ -1,0 +1,532 @@
+BARRIO,MUERTOS,HERIDOS,ATROPELLOS,TOTAL
+La Candelaria,26,2455,1006,3487
+Cabecera San Antonio de Prado,47,2445,592,3084
+Caribe,26,2550,200,2776
+Campo Amor,29,2427,253,2709
+Castilla,13,2292,361,2666
+Perpetuo Socorro,22,2385,204,2611
+Villa Nueva,21,1763,483,2267
+San Benito,29,1582,420,2031
+Los Conquistadores,22,1827,175,2024
+Santa Fé,20,1767,191,1978
+Los Colores,13,1695,209,1917
+Carlos E. Restrepo,11,1642,163,1816
+Guayaquil,27,1424,363,1814
+Terminal de Transporte,19,1593,187,1799
+Barrio Colón,14,1423,327,1764
+Boston,12,1458,281,1751
+Naranjal,14,1431,170,1615
+Prado,15,1362,190,1567
+San Diego,12,1312,167,1491
+Cristo Rey,22,1235,180,1437
+Guayabal,12,1258,151,1421
+El Chagualo,23,1135,200,1358
+La Alpujarra,15,1158,106,1279
+Las Granjas,14,967,295,1276
+Belén,7,1020,173,1200
+Jesús Nazareno,21,1009,163,1193
+Moravia,16,928,237,1181
+Villa Carlota,13,1062,92,1167
+Universidad Nacional,14,1040,99,1153
+El Progreso,3,1027,114,1144
+Campo Valdés No. 1,6,906,190,1102
+Corazón de Jesús,24,883,189,1096
+La Aguacatala,10,1003,61,1074
+Rosales,9,951,89,1049
+San Isidro,3,868,177,1048
+Pedregal,6,825,190,1021
+Robledo,9,905,104,1018
+Laureles,10,907,83,1000
+Sevilla,11,828,152,991
+El Diamante,2,833,147,982
+Kennedy,2,747,217,966
+Manrique Central No. 1,11,830,105,946
+Manrique Oriental,6,772,166,944
+Trinidad,7,758,174,939
+Suramericana,8,836,94,938
+Estación Villa,12,700,211,923
+San Bernardo,10,767,127,904
+Campo Valdés No. 2,8,699,195,902
+Oleoducto,20,807,64,891
+Berlin,7,685,190,882
+Manila,6,800,71,877
+Miranda,7,711,157,875
+Picacho,2,702,156,860
+Cucaracho,4,785,69,858
+Calle Nueva,7,709,139,855
+Cuarta Brigada,6,720,118,844
+Alfonso López,5,705,134,844
+Girardot,5,734,103,842
+Facultad de Minas U. Nacional,2,786,47,835
+Toscana,19,729,85,833
+Buenos Aires,0,722,95,817
+Las Brisas,10,721,75,806
+Barrio Caicedo,7,675,120,802
+Las Acacias,3,721,77,801
+La Esperanza,5,624,169,798
+Tejelo,4,640,135,779
+Los Ángeles,5,671,98,774
+San Miguel,3,683,82,768
+El Estadio,3,635,113,751
+La América,7,618,126,751
+López de Mesa,3,659,83,745
+Loreto,3,592,148,743
+Parque Juan Pablo II,11,672,48,731
+Santander,10,553,156,719
+La Salle,5,530,184,719
+Villa Flora,0,657,59,716
+Cerro Nutibara,12,647,56,715
+La Gloria,1,662,52,715
+Castropol,3,630,68,701
+Alejandro Echavarría,4,601,95,700
+Doce de Octubre No.2,6,563,130,699
+Cabecera Urbana San Cristobal,6,559,132,697
+Manrique Central No. 2,3,577,104,684
+Héctor Abad Gómez,12,613,54,679
+Tricentenario,9,616,54,679
+San Pedro,8,558,112,678
+Universidad de Antioquia,9,610,50,669
+Los Pinos,8,576,85,669
+San Javier No.1,4,552,106,662
+Aures No. 2,2,572,87,661
+Santo Domingo Savio No. 1,3,458,195,656
+Enciso,6,537,104,647
+Florida Nueva,4,526,116,646
+El Poblado,4,548,83,635
+Barrio Colombia,5,570,58,633
+Villa Hermosa,2,503,127,632
+Área de Expansión Pajarito,6,530,85,621
+0,3,566,51,620
+Lorena,8,514,95,617
+Sucre,6,534,71,611
+Tenche,6,552,49,607
+El Rincón,1,529,76,606
+La Floresta,4,511,85,600
+Patio Bonito,6,550,44,600
+Fátima,3,549,47,599
+Versalles No. 1,3,440,148,591
+El Raizal,3,477,111,591
+Doce de Octubre No.1,4,466,120,590
+Aures No.1,2,494,87,583
+Bomboná No. 1,5,502,74,581
+Los Mangos,5,446,127,578
+Villatina,2,442,119,563
+San Martín de Porres,1,460,98,559
+Brasilia,4,460,91,555
+Popular,1,395,143,539
+Campo Alegre,3,464,70,537
+Las Palmas,9,466,61,536
+Altamira,1,485,50,536
+El Pinal,1,413,119,533
+El Salvador,2,446,80,528
+Miraflores,2,463,56,521
+San Germán,6,436,77,519
+Asomadera No. 1,4,479,33,516
+Francisco Antonio Zea,0,421,82,503
+Bolivariana,4,442,56,502
+Santa Inés,4,381,108,493
+Palermo,4,396,92,492
+La Castellana,3,417,61,481
+La Colina,5,406,67,478
+Boyacá,2,413,62,477
+Villa Guadalupe,4,362,111,477
+Calasanz,2,432,42,476
+La Pilarica,2,424,47,473
+La Milagrosa,6,377,78,461
+Gerona,0,382,79,461
+Santa F\xE9,5,407,45,457
+Villa del Socorro,1,348,107,456
+La Florida,2,390,53,445
+San Pablo,0,329,108,437
+Barrio Col\xF3n,4,357,67,428
+La Palma,3,353,66,422
+Las Playas,2,381,33,416
+Córdoba,2,354,51,407
+Veinte de Julio,8,310,88,406
+El Pomar,1,323,76,400
+El Velódromo,2,357,38,397
+Aranjuez,2,323,67,392
+La Pradera,3,320,67,390
+Santa Cruz,4,288,92,384
+Los Alpes,1,315,48,364
+La Libertad,0,284,79,363
+Granizal,8,250,105,363
+Altavista Sector Central,5,293,62,360
+Olaya Herrera,4,289,66,359
+Belalcázar,1,317,36,354
+Las Estancias,1,273,79,353
+Suburbano La Loma,2,297,48,347
+Santa Margarita,2,304,40,346
+El Tesoro,1,314,22,337
+Moscú No. 2,1,244,88,333
+Las Violetas,5,254,69,328
+Los Alcázares,5,275,47,327
+Florencia,1,271,48,320
+Calasanz Parte Alta,1,290,27,318
+Santa María de los Ángeles,4,285,29,318
+El Danubio,4,282,32,318
+Bello Horizonte,2,254,62,318
+Granada,2,260,55,317
+La Francia,0,240,77,317
+Loma de los Bernal,2,280,30,312
+La Piñuela,3,257,52,312
+Nueva Villa de la Iguaná,2,277,28,307
+La Mota,3,272,26,301
+La Rosa,3,222,72,297
+San Joaquín,6,247,38,291
+Moscú No. 1,0,222,67,289
+Altavista,3,224,62,289
+Las Esmeraldas,6,227,56,289
+Playón de Los Comuneros,2,222,58,282
+SUBURB El Plan,0,243,33,276
+Los Naranjos,0,254,22,276
+Las Lomas No.1,2,256,18,276
+Palenque,2,238,31,271
+Santa Mónica,2,246,21,269
+Campo Vald\xE9s No. 1,4,219,45,268
+�rea de Expansi�n Pajarito,3,219,45,267
+San Javier No.2,1,197,69,267
+Mosc� No. 2,2,229,35,266
+El Pesebre,2,221,42,265
+Las Mercedes,0,227,34,261
+Simón Bolívar,2,237,22,261
+U.D. Atanasio Girardot,1,213,46,260
+Los Balsos No.2,0,227,30,257
+Bomboná No. 2,2,212,40,254
+B. Cerro  El Volador,1,203,46,250
+Coraz\xF3n de Jes\xFAs,3,204,42,249
+Bermejal-Los Alamos,3,185,60,248
+Asomadera No. 2,0,234,13,247
+La Isla,4,166,77,247
+Barrio de Jesús,5,190,48,243
+El Nogal-Los Almendros,4,215,19,238
+La Mansión,0,204,32,236
+Los Balsos No.1,4,217,9,230
+La Avanzada,0,166,64,230
+Bel\xE9n,1,190,39,230
+La Frontera,1,170,53,224
+Parque Norte,1,182,40,223
+Diego Echavarría,1,208,14,223
+Andalucía,6,158,58,222
+Jes\xFAs Nazareno,2,190,29,221
+Centro Administrativo,2,186,26,214
+Antonio Nariño,1,178,35,214
+Santa Teresita,0,187,23,210
+Altos del Poblado,1,193,15,209
+La Esperanza No. 2,0,146,62,208
+El Castillo,1,189,17,207
+Los Cerros El Vergel,2,167,36,205
+Santa Lucía,1,159,42,202
+Ferrini,1,169,26,196
+El Salado,0,158,37,195
+Villa Niza,2,148,42,192
+La Hondonada,0,176,15,191
+La Cruz,1,138,50,189
+Carpinelo,1,130,55,186
+El Rodeo,1,159,25,185
+Campo Vald\xE9s No. 2,1,152,26,179
+Santo Domingo Savio No. 2,2,120,55,177
+Las Lomas No.2,0,168,8,176
+El Compromiso,0,125,49,174
+Blanquizal,1,131,40,172
+Los \xC1ngeles,1,142,26,169
+Juan XXIII La Quiebra,1,125,40,166
+Villa Liliam,2,118,45,165
+Bosques de San Pablo,1,151,13,165
+Fuente Clara,3,141,19,163
+Cataluña,0,139,21,160
+Estaci\xF3n Villa,0,121,38,159
+Las Independencias,0,112,46,158
+Belencito,1,132,23,156
+Piedras Blancas,2,107,44,153
+H\xE9ctor Abad G\xF3mez,2,139,11,152
+El Progreso No.2,3,119,30,152
+Alejandría,1,139,12,152
+La Am\xE9rica,2,121,21,144
+Monteclaro,0,125,19,144
+Pajarito,0,133,11,144
+El Rinc\xF3n,0,118,23,141
+Suburbano Travesias,0,115,24,139
+El Diamante No. 2,0,128,9,137
+Alejandro Echavarr\xEDa,1,121,14,136
+F\xE1tima,0,125,11,136
+La mota,1,121,14,136
+Lalinde,2,121,11,134
+Bombon\xE1 No. 1,2,117,14,133
+Alfonso L\xF3pez,0,111,18,129
+Nuevos Conquistadores,1,95,33,129
+Betania,2,101,26,129
+Astorga,0,115,13,128
+Cementerio Universal,0,120,7,127
+Facultad Veterinaria y Zootecnia U.de.A.,0,112,15,127
+Oriente,2,92,32,126
+Santa María de Los Ángeles,4,119,2,125
+Pablo VI,2,79,40,121
+Jardín Botánico,2,99,18,119
+Nueva Villa de Aburrá,1,101,17,119
+L\xF3pez de Mesa,0,104,12,116
+\xC1rea de Expansi\xF3n Pajarito,1,91,19,111
+El Corazón,2,86,22,110
+San Lucas,1,95,13,109
+Llanaditas,0,73,35,108
+San Mart\xEDn de Porres,0,85,21,106
+El Socorro,2,75,27,104
+Santa In\xE9s,0,86,16,102
+Picachito,0,84,17,101
+Plaza de Ferias,2,87,9,98
+Barrio Cristóbal,1,82,11,94
+Aldea Pablo VI,1,66,25,92
+Barrio de Jes\xFAs,1,72,17,90
+La Loma Oriental,0,75,9,84
+El Rinc�n,0,75,6,81
+Belalc\xE1zar,0,77,4,81
+El Vel\xF3dromo,0,71,9,80
+C\xF3rdoba,0,68,11,79
+María Cano Carambolas,1,48,30,79
+Trece de Noviembre,1,49,28,78
+Mosc\xFA No. 2,2,56,18,76
+San Germ\xE1n,1,65,10,76
+Hospital San Vicente de Paúl,0,61,12,73
+Versalles No. 2,0,54,19,73
+Suburbano Altavista,1,61,9,71
+Boyac\xE1,0,63,7,70
+El Triunfo,0,53,17,70
+Villa Turbay,0,57,13,70
+Campo Valdés No.2,1,52,14,67
+Bombon\xE1 No. 2,1,53,9,63
+Pedregal Alto,1,61,1,63
+Sim\xF3n Bol\xEDvar,0,55,7,62
+La Pi\xF1uela,0,55,7,62
+Asomadera No. 3,1,59,2,62
+Ocho de Marzo,1,47,13,61
+Miravalle,0,53,8,61
+U.P.B.,1,54,6,61
+La Ladera,0,52,8,60
+Los Alc\xE1zares,0,51,8,59
+Suburbano Mirador del Poblado,0,56,2,58
+Mosc\xFA No. 1,0,46,12,58
+San Joaqu\xEDn,0,53,5,58
+Diego Echavarr�a,0,54,2,56
+Área de Expansión Altos de Calasanz,1,48,7,56
+Nueva Villa de la Iguan\xE1,0,53,3,56
+Mirador del Doce,1,42,12,55
+Barrio de Jes�s,1,43,11,55
+La Mansi\xF3n,0,45,9,54
+Juan Pablo II,0,39,14,53
+Aguas Frias,0,39,14,53
+Play\xF3n de Los Comuneros,1,35,14,50
+La Verde,0,44,3,47
+Santa Mar�a de los �ngeles,1,43,2,46
+Pedregal Bajo,0,44,2,46
+El Picacho,0,37,9,46
+San Antonio,0,35,9,44
+Santa F�,0,42,2,44
+San Germ�n,0,41,3,44
+Área de Expansión San Antonio de Prado,2,35,6,43
+Eduardo Santos,0,37,5,42
+El Vergel,0,36,5,41
+Andaluc\xEDa,0,29,12,41
+San José la Cima No. 1,1,29,11,41
+Buga Patio Bonito,0,36,4,40
+El Coraz�n,0,31,8,39
+Bomboná No.1,0,33,5,38
+Metropolitano,0,32,6,38
+Santa Mar\xEDa de los \xC1ngeles,0,34,4,38
+7001,0,28,10,38
+Santa M\xF3nica,0,34,3,37
+�rea de Expansi�n San Antonio de Prado,0,34,3,37
+Catalu\xF1a,0,33,4,37
+Aguas frias,0,28,9,37
+La Oculta,1,30,5,36
+El Corazon El Morro ,0,31,5,36
+Yolombo,0,31,2,33
+Area De Expansion Altavista,0,26,6,32
+Alejandr\xEDa,0,31,1,32
+Santa Mar\xEDa de Los \xC1ngeles,1,28,2,31
+Antonio Nari\xF1o,0,27,3,30
+Area De Expansion Belen Rincon,0,27,3,30
+San Joaqu�n,0,27,1,28
+Santa Luc\xEDa,0,25,3,28
+Diego Echavarr\xEDa,1,24,2,27
+Bombon� No. 2,0,24,3,27
+Manrique Central No.2,0,23,3,26
+408,0,21,5,26
+Santa Rosa de Lima,0,20,5,25
+El Coraz\xF3n,0,17,7,24
+Suburbano el Tesoro,1,19,3,23
+Manrique Central No.1,0,20,3,23
+La Loma,0,18,5,23
+1204,0,18,4,22
+Area de Expansion Altos de Calasanz,0,17,4,21
+Jard\xEDn Bot\xE1nico,0,17,4,21
+Suburbano Palma Patio,1,17,2,20
+Alejandr�a,0,20,0,20
+Suburbano Pedregal alto,0,18,2,20
+Hospital San Vicente de Pa\xFAl,0,19,1,20
+San José la Cima No.2,0,16,3,19
+Berlín,0,15,4,19
+Suburbano El Llano,1,16,2,19
+La Sierra,0,18,1,19
+Bel�n,0,18,0,18
+1007,0,15,3,18
+1408,0,16,2,18
+Mar�a Cano Carambolas,0,12,5,17
+Suburbano La Palma-El Patio,0,12,3,15
+6001,0,14,1,15
+1019,0,10,5,15
+La Loma de Los Bernal,0,13,1,14
+1419,0,13,1,14
+1507,0,12,2,14
+Área de Expansión Altavista,0,11,2,13
+Mosc� No. 1,0,11,2,13
+Barrio Crist\xF3bal,0,11,1,12
+Antonio Nari�o,0,12,0,12
+1422,0,11,1,12
+\xC1rea de Expansi\xF3n Altos de Calasanz,0,11,1,12
+Campo Vald\xE9s No.2,0,9,3,12
+Mar\xEDa Cano Carambolas,0,8,4,12
+Nueva Villa de Aburr\xE1,0,11,1,12
+El Corazon El Morro,0,8,4,12
+Moscú No.2,0,8,4,12
+1423,0,11,0,11
+Batallón Girardot,0,7,4,11
+1603,0,10,0,10
+402,0,9,1,10
+Suburbano Chacaltaya,0,10,0,10
+1510,0,10,0,10
+San Jos� la Cima No. 1,0,7,3,10
+El Astillero,0,8,1,9
+303,0,8,1,9
+811,0,7,2,9
+San Jos\xE9 la Cima No. 1,0,5,3,8
+Aures No.2,0,7,1,8
+1504,0,7,1,8
+F�tima,0,5,2,7
+Santo Domingo Savio No.1,0,5,2,7
+907,0,7,0,7
+809,0,5,2,7
+Santa Elena Sector Central,0,6,1,7
+\xC1rea de Expansi\xF3n San Antonio de Prado,0,6,1,7
+Media Luna,0,6,1,7
+307,0,6,1,7
+Suburbano Potrerito,0,4,2,6
+San Jos\xE9 la Cima No.2,0,5,1,6
+Suburbano Aguas Frias,0,4,2,6
+Inst,3,1,2,6
+205,0,3,3,6
+Bombon\xE1 No.1,0,5,1,6
+Villa Lilliam,0,5,1,6
+Piedras Blancas Represa,0,6,0,6
+1003,1,5,0,6
+1011,0,5,1,6
+Suburbano Palmitas,1,3,1,5
+717,0,3,2,5
+Batall\xF3n Girardot,0,3,2,5
+Nueva Villa de la Iguan�,0,5,0,5
+310,0,3,2,5
+1101,0,3,2,5
+1018,0,3,1,4
+Campo Vald�s No. 1,0,4,0,4
+C�rdoba,0,4,0,4
+Volcana Guayabal,0,3,1,4
+Yarumalito,0,4,0,4
+306,0,2,2,4
+302,0,3,1,4
+211,0,3,1,4
+La Am�rica,0,4,0,4
+La Mansi�n,0,4,0,4
+813,0,3,1,4
+1503,0,2,2,4
+Alfonso L�pez,0,4,0,4
+1103,0,4,0,4
+103,0,3,1,4
+105,0,2,2,4
+Potrerito,0,3,1,4
+509,0,2,1,3
+Versalles No.1,0,2,1,3
+Sin Nombre,0,3,0,3
+El Salado ,0,3,0,3
+7002,0,3,0,3
+514,0,2,1,3
+Santa In�s,0,2,1,3
+312,0,3,0,3
+Berl\xEDn,0,2,1,3
+Boqueron,0,2,1,3
+1020,0,3,0,3
+1611,0,2,1,3
+1612,0,1,1,2
+1206,0,2,0,2
+1613,0,1,1,2
+1114,0,1,1,2
+Versalles No.2,0,1,1,2
+1102,0,2,0,2
+Suburbano La Cuchilla,0,1,1,2
+Los Alc�zares,0,2,0,2
+Boyac�,0,2,0,2
+712,0,2,0,2
+914,0,1,1,2
+5002,0,2,0,2
+912,0,2,0,2
+1001,0,2,0,2
+Asomadera No.1,1,1,0,2
+Palmitas Sector Central,0,2,0,2
+Barrios de Jesús,0,1,1,2
+301,0,1,1,2
+Nueva Villa de La Iguaná,0,1,1,2
+Santa M�nica,0,1,1,2
+505,0,2,0,2
+El Llano SE,0,1,0,1
+1205,0,1,0,1
+El Cerro,0,1,0,1
+1306,0,1,0,1
+9004,0,1,0,1
+AUC1,1,0,0,1
+1202,0,1,0,1
+815,0,1,0,1
+AUC2,0,1,0,1
+Piedras Blancas - Matasano,0,1,0,1
+B. Cerro El Volador,1,0,0,1
+109,0,1,0,1
+Belalc�zar,0,1,0,1
+819,0,1,0,1
+San Jos� la Cima No.2,0,1,0,1
+El Plan,0,1,0,1
+304,0,1,0,1
+309,0,1,0,1
+409,0,1,0,1
+1004,0,1,0,1
+716,0,1,0,1
+413,0,1,0,1
+Suburbano El Plan,0,1,0,1
+1511,0,1,0,1
+606,0,1,0,1
+San José de la Montaña,0,1,0,1
+Sim�n Bol�var,0,1,0,1
+San Jos\xE9 de la Monta\xF1a,0,1,0,1
+1605,0,1,0,1
+208,0,1,0,1
+El Uvito,0,1,0,1
+Sin Inf,1,0,0,1
+1015,0,0,0,0
+Moscú No.1,0,0,0,0
+Jard�n Bot�nico,0,0,0,0
+1012,0,0,0,0
+Campo Vald�s No. 2,0,0,0,0
+Coraz�n de Jes�s,0,0,0,0
+1008,0,0,0,0
+Mosc\xFA No.2,0,0,0,0
+1620,0,0,0,0
+Barrio Col�n,0,0,0,0
+1105,0,0,0,0
+1108,0,0,0,0
+202,0,0,0,0
+Travesías,0,0,0,0
+906,0,0,0,0
+903,0,0,0,0
+803,0,0,0,0
+711,0,0,0,0
+Suburbano Piedra Gorda,0,0,0,0
+San Jose Del Manzanillo,0,0,0,0
+Suburbano El Cerro,0,0,0,0
+Santa Luc�a,0,0,0,0
+1211,0,0,0,0

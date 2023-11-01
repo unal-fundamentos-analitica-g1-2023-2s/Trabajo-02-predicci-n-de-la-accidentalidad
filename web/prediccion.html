@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Predicción de Accidentalidad</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="prediccionScript.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Proyecto de Accidentalidad en Medellín</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="visualizacion.html">Visualización</a></li>
+        <li><a href="prediccion.html">Predicción</a></li>
+        <li><a href="agrupamiento.html">Agrupamiento</a></li>
+      </ul>
+    </nav>
+  </header>
+  <h1>Predicción de Accidentalidad</h1>
+
+  <form onsubmit="return obtenerPrediccion(event)">
+    <label for="tipoRango">Seleccione el tipo de rango:</label>
+    <select id="tipoRango" onchange="return cambiarTipoRango()">
+      <option value="Dia">Día del año</option>
+      <option value="Semana">Semana del año</option>
+      <option value="Mes">Mes</option>
+    </select>
+
+    <label for="fecha">Seleccione una fecha:</label>
+    <input type="date" id="fecha" min="2020-01-01" max="2021-12-31">
+
+    <button type="submit">Obtener Predicción</button>
+  </form>
+
+
+  <div id="resultados"></div>
+</body>
+</html>
