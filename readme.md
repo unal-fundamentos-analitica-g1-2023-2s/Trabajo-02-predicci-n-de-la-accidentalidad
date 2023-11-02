@@ -49,3 +49,9 @@ Se debe referenciar en el reporte técnico un repositorio Git donde se pueda con
 Se recomienda mantener los equipos de la primera entrega. Las contribuciones al repositorio git y las modificaciones aportadas por cada estudiante se tendrán en cuenta.
 
 La entrega se hará a través de la plataforma Google Classroom del curso en el espacio correspondiente para ello. Solo un integrante del grupo debe publicar el trabajo en la plataforma.
+
+
+# Links de interés:
+- Notebook en Deepnotes: https://deepnote.com/workspace/fundamentos-de-analitica-2023-2s-a07f5bfc-2e4d-480f-a78a-128611dba2f2/project/Modelo-de-prediccion-incidentes-en-Medellin-7a66f1f6-a22d-45c4-8e8c-1b7948ed24c7/notebook/Notebook%201-a269757fe10244c59c811b25fdf4ff87
+- Webpage: https://unal-fundamentos-analitica-g1-2023-2s.github.io/Trabajo-02-predicci-n-de-la-accidentalidad/index.html
+- Reporte técnico: https://unal-fundamentos-analitica-g1-2023-2s.github.io/Trabajo-02-predicci-n-de-la-accidentalidad/blog/reporte.html
