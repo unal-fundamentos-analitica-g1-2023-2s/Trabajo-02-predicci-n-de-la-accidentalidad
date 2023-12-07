@@ -1,4 +1,4 @@
-**Introducción**
+**INTRODUCCIÓN**
 
 Los accidentes de tráfico representan un grave problema de seguridad pública a nivel global, y la ciudad de Medellín, Colombia, no escapa a esta preocupación. Según los datos analizados para la elaboración de este estudio, se evidencia que anualmente miles de personas son víctimas de accidentes viales en la ciudad, con consecuencias que van desde lesiones hasta lamentablemente, en ocasiones, pérdidas de vidas. Estos incidentes se consideran un desafío social significativo, dado su impacto económico y las repercusiones en la salud pública, entendida esta última como las consecuencias físicas y mentales para los afectados (García-García et al, 2011). Esta problemática constituye un reto constante para las autoridades locales y genera inquietud en la comunidad en general. La imperiosa necesidad de abordar de manera proactiva y eficaz este problema ha impulsado investigaciones y soluciones innovadoras en el ámbito de la seguridad vial.
 
